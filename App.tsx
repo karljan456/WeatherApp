@@ -1,118 +1,64 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+import React from 'react'
+import { Text, View, TextInput, StyleSheet, Dimensions, Switch } from 'react-native'
 
-import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+function App() {
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
-function Section({children, title}: SectionProps): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
   return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
+    <View style={styles.container}>
+      <Switch />
+      <TextInput style={styles.input}>Search for a city</TextInput>
+      <Text style={styles.city}>City</Text>
+      <Text style={styles.date}>Date</Text>
+      <Text style={styles.temp}>Temp</Text>
+      <Text style={styles.weather}>Weather</Text>
+      <Text style={styles.highLow}>Highest/Lowest</Text>
     </View>
-  );
-}
+  )
 
-function App(): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
 }
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  container: {
+    flex: 1,
+    width: '100%'
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
+  input: {
+    backgroundColor: '#C0C0C0',
+    color: 'white',
+    textAlign: 'center',
+    width: (Dimensions.get('screen').width / 2),
+    marginLeft: (Dimensions.get('screen').width / 4),
+    marginTop: (Dimensions.get('screen').height / 20),
+    borderRadius: 30,
+    fontSize: 25
   },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
+  city: {
+    textAlign: 'center',
+    justifyContent: 'space-around',
+    fontSize: 40,
+    marginBottom: '5%'
   },
-  highlight: {
-    fontWeight: '700',
+  date: {
+    textAlign: 'center',
+    justifyContent: 'space-around',
+    fontSize: 25
   },
-});
+  temp: {
+    textAlign: 'center',
+    justifyContent: 'space-around',
+    fontSize: 100,
+  },
+  weather: {
+    textAlign: 'center',
+    justifyContent: 'space-around',
+    fontSize: 30,
+    marginBottom: '5%'
+  },
+  highLow: {
+    textAlign: 'center',
+    justifyContent: 'space-around',
+    fontSize: 20,
+  }
+})
 
 export default App;
