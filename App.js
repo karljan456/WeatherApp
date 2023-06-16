@@ -13,13 +13,13 @@ function App() {
 
     const [temp, weatherData, city, code, tempMax, tempMin, iconURL] = useGetWeatherData(request, metric);
 
-    const date = new Date();
-
-    const localDate = date.toLocaleDateString();
-
     const [units, setUnits] = useState("°C");
 
-    const [toggle, setToggle] = useState(false)
+    const [toggle, setToggle] = useState(false);
+
+    const [celsius, setCelsius] = useState({ fontSize: 30, fontWeight: 'bold' });
+
+    const [fahrenheit, setFahrenheit] = useState({ fontSize: 30 });
 
     let colors;
 
@@ -58,7 +58,7 @@ function App() {
                     flexDirection: 'row-reverse', paddingLeft: Dimensions.get('screen').width / 10,
                     marginTop: Dimensions.get('screen').height / 50
                 }}>
-                    <Text style={styles.tempText}>°F</Text>
+                    <Text style={fahrenheit}>°F</Text>
 
                     <Switch value={toggle} onValueChange={(e) => {
 
@@ -70,6 +70,10 @@ function App() {
 
                             setToggle(true);
 
+                            setFahrenheit({ fontWeight: 'bold', fontSize: 30 })
+
+                            setCelsius({ fontWeight: '', fontSize: 30 })
+
                         } else {
 
                             setMetric("metric");
@@ -78,9 +82,13 @@ function App() {
 
                             setToggle(false);
 
+                            setCelsius({ fontWeight: 'bold', fontSize: 30 })
+
+                            setFahrenheit({ fontWeight: '', fontSize: 30 })
+
                         }
-                    }} />
-                    <Text style={styles.tempText}>°C</Text>
+                    }} trackColor={{false: '#5097A4', true: '#73C2FB'}} />
+                    <Text style={celsius}>°C</Text>
                 </View>
                 <TextInput style={styles.input} value={currentCity} placeholder='Search for a city' placeholderTextColor={'white'} onChangeText={(e) => setCurrentCity(e)} onEndEditing={() => {
 
@@ -90,8 +98,6 @@ function App() {
                 }} ></TextInput>
 
                 <Text style={styles.city}>{city} {code}</Text>
-
-                <Text style={styles.date}>{localDate}</Text>
 
                 <Text style={styles.temp}>{Math.floor(temp) + units}</Text>
 
@@ -129,11 +135,6 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         justifyContent: 'space-around',
         fontSize: 40
-    },
-    date: {
-        textAlign: 'center',
-        justifyContent: 'space-around',
-        fontSize: 25
     },
     temp: {
         textAlign: 'center',

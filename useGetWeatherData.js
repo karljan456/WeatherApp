@@ -33,7 +33,7 @@ export const useGetWeatherData = (city = "Helsinki", unit = "metric") => {
 
                 setTempMin(data['main']['temp_min']);
 
-                setIconURL("http://openweathermap.org/img/w/"+data['weather'][0]['icon']+".png")
+                setIconURL("http://openweathermap.org/img/w/" + data['weather'][0]['icon'] + ".png")
 
             }).catch(err => Alert.alert('Invalid input', 'Wrong city name'))
 
