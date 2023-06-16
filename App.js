@@ -6,19 +6,51 @@ function App() {
 
     const [currentCity, setCurrentCity] = useState();
 
+    const [metric, setMetric] = useState("metric");
+
     const [request, setRequest] = useState("Helsinki");
 
-    const [temp, weatherData, city, code, tempMax, tempMin] = useGetWeatherData(request, "metric");
+    const [temp, weatherData, city, code, tempMax, tempMin] = useGetWeatherData(request, metric);
 
     const date = new Date();
 
     const localDate = date.toLocaleDateString();
 
+    const [units, setUnits] = useState("°C");
+
+    const [toggle, setToggle] = useState(false)
+
     return (
         <View style={styles.container}>
 
-            <Switch />
+            <View style={{
+                flexDirection: 'row-reverse', paddingLeft: Dimensions.get('screen').width / 10,
+                marginTop: Dimensions.get('screen').height / 50
+            }}>
+                <Text style={styles.tempText}>°F</Text>
 
+                <Switch value={toggle} onValueChange={(e) => {
+
+                    if (e) {
+
+                        setMetric("imperial");
+
+                        setUnits("°F");
+                        
+                        setToggle(true);
+
+                    } else {
+
+                        setMetric("metric");
+
+                        setUnits("°C");
+
+                        setToggle(false);
+
+                    }
+                }} />
+                <Text style={styles.tempText}>°C</Text>
+            </View>
             <TextInput style={styles.input} placeholder='Search for a city' placeholderTextColor={'white'} onChangeText={(e) => setCurrentCity(e)} onEndEditing={() => {
 
                 setRequest(currentCity.trim());
@@ -29,11 +61,11 @@ function App() {
 
             <Text style={styles.date}>{localDate}</Text>
 
-            <Text style={styles.temp}>{temp}</Text>
+            <Text style={styles.temp}>{Math.floor(temp) + units}</Text>
 
             <Text style={styles.weather}>{weatherData}</Text>
 
-            <Text style={styles.highLow}>Highest{tempMax}/Lowest{tempMin}</Text>
+            <Text style={styles.highLow}>Highest: {Math.floor(tempMax) + units} / Lowest: {Math.floor(tempMin) + units}</Text>
 
         </View>
     )
@@ -54,6 +86,7 @@ const styles = StyleSheet.create({
         marginTop: (Dimensions.get('screen').height / 20),
         borderRadius: 30,
         fontSize: 25,
+        marginBottom: '5%'
     },
     city: {
         textAlign: 'center',
@@ -80,7 +113,10 @@ const styles = StyleSheet.create({
     highLow: {
         textAlign: 'center',
         justifyContent: 'space-around',
-        fontSize: 20,
+        fontSize: 20
+    },
+    tempText: {
+        fontSize: 20
     }
 })
 

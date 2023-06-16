@@ -33,7 +33,7 @@ export const useGetWeatherData = (city = "Helsinki", unit = "metric") => {
 
             }).catch(err => Alert.alert('Invalid input', 'Wrong city name'))
 
-    }, [city]);
+    }, [city, unit]);
 
     return [temp, weather, city, countryCode, tempMax, tempMin];
 
