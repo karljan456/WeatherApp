@@ -21,8 +21,34 @@ function App() {
 
     const [toggle, setToggle] = useState(false)
 
+    let colors;
+
+
+    switch (weatherData) {
+
+        case 'Clear':
+            colors = ['#FF781F', '#CA3433'];
+            break;
+        case 'Clouds':
+            colors = ['#F8F8F8', '#97978F'];
+            break;
+        case 'Snow':
+            colors = ['#1520A6', '#82EEFD'];
+            break;
+        case 'Rain':
+            colors = ['#787276', '#63C5DA'];
+            break;
+        case 'Haze':
+            colors = ['#F8F8F8', '#97978F'];
+            break;
+        default:
+            colors = ['blue', 'white'];
+            break;
+
+    }
+
     return (
-        <LinearGradient colors={['#FF781F', '#CA3433']}
+        <LinearGradient colors={colors}
             style={styles.container}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}>
@@ -56,7 +82,7 @@ function App() {
                     }} />
                     <Text style={styles.tempText}>°C</Text>
                 </View>
-                <TextInput style={styles.input} value={currentCity} placeholder='Search for a city' placeholderTextColor={'black'} onChangeText={(e) => setCurrentCity(e)} onEndEditing={() => {
+                <TextInput style={styles.input} value={currentCity} placeholder='Search for a city' placeholderTextColor={'white'} onChangeText={(e) => setCurrentCity(e)} onEndEditing={() => {
 
                     setRequest(currentCity.trim());
                     setCurrentCity("");
@@ -97,7 +123,7 @@ const styles = StyleSheet.create({
         marginTop: (Dimensions.get('screen').height / 20),
         borderRadius: 30,
         fontSize: 25,
-        marginBottom: '5%'
+        marginBottom: '3%'
     },
     city: {
         textAlign: 'center',
@@ -130,7 +156,7 @@ const styles = StyleSheet.create({
     icon: {
         width: Dimensions.get('screen').width,
         height: Dimensions.get('screen').height / 4,
-        resizeMode: 'contain'
+        resizeMode: 'contain',
     }
 })
 
