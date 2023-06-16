@@ -23,60 +23,61 @@ function App() {
 
     return (
         <LinearGradient colors={['#FF781F', '#CA3433']}
-        style={styles.container}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}>
-        <View style={styles.container}>
+            style={styles.container}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}>
+            <View style={styles.container}>
 
-            <View style={{
-                flexDirection: 'row-reverse', paddingLeft: Dimensions.get('screen').width / 10,
-                marginTop: Dimensions.get('screen').height / 50
-            }}>
-                <Text style={styles.tempText}>°F</Text>
+                <View style={{
+                    flexDirection: 'row-reverse', paddingLeft: Dimensions.get('screen').width / 10,
+                    marginTop: Dimensions.get('screen').height / 50
+                }}>
+                    <Text style={styles.tempText}>°F</Text>
 
-                <Switch value={toggle} onValueChange={(e) => {
+                    <Switch value={toggle} onValueChange={(e) => {
 
-                    if (e) {
+                        if (e) {
 
-                        setMetric("imperial");
+                            setMetric("imperial");
 
-                        setUnits("°F");
-                        
-                        setToggle(true);
+                            setUnits("°F");
 
-                    } else {
+                            setToggle(true);
 
-                        setMetric("metric");
+                        } else {
 
-                        setUnits("°C");
+                            setMetric("metric");
 
-                        setToggle(false);
+                            setUnits("°C");
 
-                    }
+                            setToggle(false);
+
+                        }
+                    }} />
+                    <Text style={styles.tempText}>°C</Text>
+                </View>
+                <TextInput style={styles.input} value={currentCity} placeholder='Search for a city' placeholderTextColor={'black'} onChangeText={(e) => setCurrentCity(e)} onEndEditing={() => {
+
+                    setRequest(currentCity.trim());
+                    setCurrentCity("");
+
+                }} ></TextInput>
+
+                <Text style={styles.city}>{city} {code}</Text>
+
+                <Text style={styles.date}>{localDate}</Text>
+
+                <Text style={styles.temp}>{Math.floor(temp) + units}</Text>
+
+                <Text style={styles.weather}>{weatherData}</Text>
+
+                <Image style={styles.icon} source={{
+                    uri: iconURL
                 }} />
-                <Text style={styles.tempText}>°C</Text>
+
+                <Text style={styles.highLow}>Highest: {Math.floor(tempMax) + units} / Lowest: {Math.floor(tempMin) + units}</Text>
+
             </View>
-            <TextInput style={styles.input} placeholder='Search for a city' placeholderTextColor={'black'} onChangeText={(e) => setCurrentCity(e)} onEndEditing={() => {
-
-                setRequest(currentCity.trim());
-
-            }} ></TextInput>
-
-            <Text style={styles.city}>{city} {code}</Text>
-
-            <Text style={styles.date}>{localDate}</Text>
-
-            <Text style={styles.temp}>{Math.floor(temp) + units}</Text>
-
-            <Text style={styles.weather}>{weatherData}</Text>
-
-            <Image style={styles.icon} source={{
-                uri: iconURL
-            }} />
-
-            <Text style={styles.highLow}>Highest: {Math.floor(tempMax) + units} / Lowest: {Math.floor(tempMin) + units}</Text>
-
-        </View>
         </LinearGradient>
     )
 
@@ -88,8 +89,8 @@ const styles = StyleSheet.create({
         width: '100%'
     },
     input: {
-        backgroundColor: '#C0C0C0',
-        color: 'black',
+        backgroundColor: 'rgba(60, 60, 60, 0.5)',
+        color: 'white',
         textAlign: 'center',
         width: (Dimensions.get('screen').width / 2),
         marginLeft: (Dimensions.get('screen').width / 4),
@@ -126,8 +127,8 @@ const styles = StyleSheet.create({
     tempText: {
         fontSize: 20,
     },
-    icon:{
-        width:Dimensions.get('screen').width,
+    icon: {
+        width: Dimensions.get('screen').width,
         height: Dimensions.get('screen').height / 4,
         resizeMode: 'contain'
     }
