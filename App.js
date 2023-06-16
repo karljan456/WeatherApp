@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import { Text, View, TextInput, StyleSheet, Dimensions, Switch } from 'react-native'
+import { Text, View, TextInput, StyleSheet, Dimensions, Switch, Image } from 'react-native'
 import { useGetWeatherData } from './useGetWeatherData'
+import LinearGradient from 'react-native-linear-gradient';
 
 function App() {
 
@@ -10,7 +11,7 @@ function App() {
 
     const [request, setRequest] = useState("Helsinki");
 
-    const [temp, weatherData, city, code, tempMax, tempMin] = useGetWeatherData(request, metric);
+    const [temp, weatherData, city, code, tempMax, tempMin, iconURL] = useGetWeatherData(request, metric);
 
     const date = new Date();
 
@@ -21,6 +22,10 @@ function App() {
     const [toggle, setToggle] = useState(false)
 
     return (
+        <LinearGradient colors={['#FF781F', '#CA3433']}
+        style={styles.container}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}>
         <View style={styles.container}>
 
             <View style={{
@@ -51,7 +56,7 @@ function App() {
                 }} />
                 <Text style={styles.tempText}>°C</Text>
             </View>
-            <TextInput style={styles.input} placeholder='Search for a city' placeholderTextColor={'white'} onChangeText={(e) => setCurrentCity(e)} onEndEditing={() => {
+            <TextInput style={styles.input} placeholder='Search for a city' placeholderTextColor={'black'} onChangeText={(e) => setCurrentCity(e)} onEndEditing={() => {
 
                 setRequest(currentCity.trim());
 
@@ -65,9 +70,14 @@ function App() {
 
             <Text style={styles.weather}>{weatherData}</Text>
 
+            <Image style={styles.icon} source={{
+                uri: iconURL
+            }} />
+
             <Text style={styles.highLow}>Highest: {Math.floor(tempMax) + units} / Lowest: {Math.floor(tempMin) + units}</Text>
 
         </View>
+        </LinearGradient>
     )
 
 }
@@ -79,7 +89,7 @@ const styles = StyleSheet.create({
     },
     input: {
         backgroundColor: '#C0C0C0',
-        color: 'white',
+        color: 'black',
         textAlign: 'center',
         width: (Dimensions.get('screen').width / 2),
         marginLeft: (Dimensions.get('screen').width / 4),
@@ -91,8 +101,7 @@ const styles = StyleSheet.create({
     city: {
         textAlign: 'center',
         justifyContent: 'space-around',
-        fontSize: 40,
-        marginBottom: '5%'
+        fontSize: 40
     },
     date: {
         textAlign: 'center',
@@ -107,16 +116,20 @@ const styles = StyleSheet.create({
     weather: {
         textAlign: 'center',
         justifyContent: 'space-around',
-        fontSize: 30,
-        marginBottom: '5%'
+        fontSize: 40,
     },
     highLow: {
         textAlign: 'center',
         justifyContent: 'space-around',
-        fontSize: 20
+        fontSize: 23,
     },
     tempText: {
-        fontSize: 20
+        fontSize: 20,
+    },
+    icon:{
+        width:Dimensions.get('screen').width,
+        height: Dimensions.get('screen').height / 4,
+        resizeMode: 'contain'
     }
 })
 

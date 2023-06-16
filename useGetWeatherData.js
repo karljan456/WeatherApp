@@ -16,6 +16,8 @@ export const useGetWeatherData = (city = "Helsinki", unit = "metric") => {
 
     const [tempMin, setTempMin] = useState();
 
+    const [iconURL, setIconURL] = useState();
+
     useEffect(() => {
 
         fetch("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + APIKEY + "&units=" + unit)
@@ -31,10 +33,12 @@ export const useGetWeatherData = (city = "Helsinki", unit = "metric") => {
 
                 setTempMin(data['main']['temp_min']);
 
+                setIconURL("http://openweathermap.org/img/w/"+data['weather'][0]['icon']+".png")
+
             }).catch(err => Alert.alert('Invalid input', 'Wrong city name'))
 
     }, [city, unit]);
 
-    return [temp, weather, city, countryCode, tempMax, tempMin];
+    return [temp, weather, city, countryCode, tempMax, tempMin, iconURL];
 
 }
