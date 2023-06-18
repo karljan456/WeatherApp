@@ -11,7 +11,7 @@ function App() {
 
     const [request, setRequest] = useState("Helsinki");
 
-    const [temp, weatherData, city, code, tempMax, tempMin, iconURL] = useGetWeatherData(request, metric);
+    const [temp, weatherData, city, code, tempMax, tempMin, iconURL, errorRequest] = useGetWeatherData(request, metric);
 
     const [units, setUnits] = useState("°C");
 
@@ -47,13 +47,42 @@ function App() {
 
     }
 
+    const data = () => {
+
+        if (errorRequest) {
+
+            return (<Text style={{
+                textAlign: 'center', fontSize: 50,
+                marginTop: Dimensions.get('screen').height / 5
+            }}>No data to show</Text>)
+
+        } else {
+
+            return (<View>
+                <Text style={styles.city}>{city} {code}</Text>
+
+                <Text style={styles.temp}>{Math.floor(temp) + units}</Text>
+
+                <Text style={styles.weather}>{weatherData}</Text>
+
+                <Image style={styles.icon} source={{
+                    uri: iconURL
+                }} />
+
+                <Text style={styles.highLow}>Highest: {Math.floor(tempMax) + units} / Lowest: {Math.floor(tempMin) + units}</Text>
+
+            </View>)
+
+        }
+
+    }
+
     return (
         <LinearGradient colors={colors}
             style={styles.container}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}>
             <View style={styles.container}>
-
                 <View style={{
                     flexDirection: 'row-reverse', paddingLeft: Dimensions.get('screen').width / 10,
                     marginTop: Dimensions.get('screen').height / 50
@@ -87,7 +116,7 @@ function App() {
                             setFahrenheit({ fontWeight: '', fontSize: 30 })
 
                         }
-                    }} trackColor={{false: '#5097A4', true: '#73C2FB'}} />
+                    }} trackColor={{ false: '#5097A4', true: '#73C2FB' }} />
                     <Text style={celsius}>°C</Text>
                 </View>
                 <TextInput style={styles.input} value={currentCity} placeholder='Search for a city' placeholderTextColor={'white'} onChangeText={(e) => setCurrentCity(e)} onEndEditing={() => {
@@ -97,17 +126,7 @@ function App() {
 
                 }} ></TextInput>
 
-                <Text style={styles.city}>{city} {code}</Text>
-
-                <Text style={styles.temp}>{Math.floor(temp) + units}</Text>
-
-                <Text style={styles.weather}>{weatherData}</Text>
-
-                <Image style={styles.icon} source={{
-                    uri: iconURL
-                }} />
-
-                <Text style={styles.highLow}>Highest: {Math.floor(tempMax) + units} / Lowest: {Math.floor(tempMin) + units}</Text>
+                {data()}
 
             </View>
         </LinearGradient>
